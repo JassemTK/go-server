@@ -1,0 +1,6 @@
+to build an image using Buildah from Dockerfile: 
+buildah bud -f Dockerfile  -t salut:0.1
+
+to inspect created image using buildah:
+buildah images (you get the ID)
+buildah inspect ID
