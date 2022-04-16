@@ -1,0 +1,6 @@
+
+FROM alpine:latest 
+WORKDIR /usr/app/
+COPY /usr/app/salut ./
+EXPOSE 8081
+CMD ["./salut"]
