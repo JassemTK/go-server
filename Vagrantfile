@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder 'C:/workplace/vagrant/', '/vagrant', type: "virtualbox", disabled: true
     config.vm.provision "bootstrap", type: "shell" do |s|
 		s.inline = "sudo yum update -y"
-		s.inline = "yum install git golang podman buildah skopeo -y"
+		s.inline = "sudo yum install git golang podman buildah skopeo -y"
 		end
     node_list.each do |node|
         config.vm.define node[:host] do |node_config|
