@@ -17,7 +17,7 @@ Vagrant.configure("2") do |config|
             node_config.vm.box = "centos/stream8"
             node_config.vm.hostname = "#{node[:host]}.#{varDomain}"
             node_config.vm.provider :virtualbox do |v|
-			node_config.vm.network "public_network", ip: node[:ip].to_s
+			node_config.vm.network "private_network", ip: node[:ip].to_s, :netmask => "255.255.255.0"
                 v.name = node[:host].to_s
                 v.customize ["modifyvm", :id, "--memory", node[:ram].to_s]
                 v.customize ["modifyvm", :id, "--cpus", node[:cpu].to_s]
