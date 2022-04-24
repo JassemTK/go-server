@@ -2,10 +2,10 @@ FROM golang:buster AS builder
 WORKDIR /usr/app/
 COPY hello.go  ./
 RUN go mod init salut
-RUN go build
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
 
 FROM alpine:latest 
 WORKDIR /usr/app/
-COPY --from=builder /usr/app/salut ./
+COPY --from=builder /usr/app/app .
 EXPOSE 8081
-CMD ["./salut"]
+CMD [".app"]
