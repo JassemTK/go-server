@@ -14,7 +14,7 @@ Create a container out of the img using the pod manager:
 `podman container create -it -p 8081 <img_ID>  ./app`  
 
 Run the container:    
-`podman run <container_name>`
+`podman run -d <container_name>`
 
 Get exposed port:    
 `podman ps`   
