@@ -13,8 +13,11 @@ Get the ID from previous command and run:
 Create a container out of the img using the pod manager:     
 `podman container create -it -p 8081 <img_ID>  ./app`  
 
-get exposed port:    
+Run the container:
+`podman run <container_name>`
+
+Get exposed port:    
 `podman ps`   
 
-Try curl or your browser
+Try curl or your browser for a greeting back.
 
