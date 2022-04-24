@@ -13,7 +13,7 @@ Get the ID from previous command and run:
 Create a container out of the img using the pod manager:     
 `podman container create -it -p 8081 <img_ID>  ./app`  
 
-Run the container:
+Run the container:    
 `podman run <container_name>`
 
 Get exposed port:    
