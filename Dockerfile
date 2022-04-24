@@ -8,4 +8,4 @@ FROM alpine:latest
 WORKDIR /usr/app/
 COPY --from=builder /usr/app/app .
 EXPOSE 8081
-CMD [".app"]
+CMD ["./app"]
