@@ -10,11 +10,10 @@ To inspect created image using buildah:
 Get the ID from previous command and run:     
 `buildah inspect <ID>`
 
-Create a container out of the img using the pod manager:     
-`podman container create -it -p 8081 <img_ID>  ./app`  
+Run a container out of the image using the pod manager:     
+`podman run -d -it -p 8081 <img_ID> `  
 
-Run the container:    
-`podman run -d <container_name>`
+
 
 Get exposed port:    
 `podman ps`   
