@@ -3,7 +3,7 @@ WORKDIR /usr/app/
 COPY hello.go  ./
 RUN go mod init salut
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .
-# trigger
+# triggerhere
 FROM alpine:latest 
 WORKDIR /usr/app/
 COPY --from=builder /usr/app/app .
