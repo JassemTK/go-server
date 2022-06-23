@@ -1,7 +1,6 @@
 name: Build Image
 on:
-  commit:
-    # Sequence of patterns matched against refs/heads
+  push:
     branches:
       - master
 
