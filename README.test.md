@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Hello 
 A hello app poorly written in golang.  
 Switch to master branch for code source.  
@@ -42,10 +42,6 @@ Once you are logged in, feel free to enable authentication by password on the ss
 The rest of the workshop resides in the master branch. 
 
 
-
-
-
-=======
 # go-server
 Demo subject of buildah podman & skopeo.
 ## Commands
@@ -65,7 +61,4 @@ Run a container out of the image using the pod manager:
 
 Get exposed port:    
 `podman ps`   
-
-Try curl or your browser for a greeting back.
->>>>>>> master
 
