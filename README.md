@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Hello 
 A hello app poorly written in golang.  
 Switch to master branch for code source.  
@@ -67,5 +66,4 @@ Get exposed port:
 `podman ps`   
 
 Try curl or your browser for a greeting back.
->>>>>>> master
 
