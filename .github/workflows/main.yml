@@ -28,5 +28,5 @@ jobs:
     runs-on: self-hosted
     steps:                 
       - run: | 
-          skopeo login
+          skopeo login docker.io
           skopeo copy containers-storage:localhost/gtc:${{ github.sha }}[4] docker://microlotf/hellogo:${{ github.sha }}
