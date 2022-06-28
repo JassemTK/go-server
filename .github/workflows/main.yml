@@ -4,9 +4,9 @@ on:
 
 jobs:
   building_from_file:
+    name: Container creation
     runs-on: self-hosted
-    steps:
-      - name: Container creation 
+    steps: 
       - run: | 
           buildah bud -f Dockerfile -t gtc:${{ github.sha }}[4]
           
@@ -22,9 +22,9 @@ jobs:
           echo "Testing the endpoint"
           curl localhost:$(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')/Feature1
   publishing_image:
+    name: image push to  docker.hub registry 
     runs-on: self-hosted
     steps:                 
-      - name: image push to  docker.hub registry 
       - run: | 
           skopeo login
           skopeo copy containers-storage:localhost/gtc:${{ github.sha }}[4] docker://microlotf/hellogo:${{ github.sha }}[4]
