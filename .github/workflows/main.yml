@@ -8,7 +8,7 @@ jobs:
     runs-on: self-hosted
     steps: 
       - run: | 
-          buildah bud -f Dockerfile -t gtc:${{ github.sha }}[4]
+          buildah bud -f Dockerfile -t gtc:${{ github.sha }}
           
   
   testing_container:
@@ -16,7 +16,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - run: | 
-          podman run -p 8081 --name gtc gtc:${{ github.sha }}[4]
+          podman run -p 8081 --name gtc gtc:${{ github.sha }}
           echo "is the container running? $(podman inspect gtc | jq -r '.[].State.Running')"
           echo "Publish port: $(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')"
           echo "Testing the endpoint"
@@ -27,4 +27,4 @@ jobs:
     steps:                 
       - run: | 
           skopeo login
-          skopeo copy containers-storage:localhost/gtc:${{ github.sha }}[4] docker://microlotf/hellogo:${{ github.sha }}[4]
+          skopeo copy containers-storage:localhost/gtc:${{ github.sha }}[4] docker://microlotf/hellogo:${{ github.sha }}
