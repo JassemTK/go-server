@@ -11,9 +11,10 @@ jobs:
           buildah bud -f Dockerfile -t gtc:${{ github.sha }}
           
   
-  testing_container:
+  smoke_tests:
     name: locally running the container + possible smoke tests  
     runs-on: self-hosted
+    needs: building_from_file
     steps:
       - run: | 
           podman run -d -p 8081 --name gtc localhost/gtc:${{ github.sha }}
@@ -22,6 +23,7 @@ jobs:
   publishing_image:
     name: image push to  docker.hub registry 
     runs-on: self-hosted
+    needs: smoke_tests
     steps:                 
       - run: | 
           skopeo login docker.io
