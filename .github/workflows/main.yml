@@ -12,16 +12,12 @@ jobs:
           
   
   testing_container:
-    name: locally running the container + possible smoke tests 
+    name: locally running the container + possible smoke tests  
     runs-on: self-hosted
     steps:
       - run: | 
           podman run -d -p 8081 --name gtc gtc:${{ github.sha }}
-          echo "is the container running? $(podman inspect gtc | jq -r '.[].State.Running')"
-          echo "Publish port: $(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')"
-          echo "Testing the endpoint"
           curl localhost:$(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')/Feature1
-          echo "sanity checks done, deleting container.."
           podman rm gtc
   publishing_image:
     name: image push to  docker.hub registry 
