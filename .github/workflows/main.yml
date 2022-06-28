@@ -16,7 +16,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - run: | 
-          podman run -p 8081 --name gtc gtc:${{ github.sha }}
+          podman run -d -p 8081 --name gtc gtc:${{ github.sha }}
           echo "is the container running? $(podman inspect gtc | jq -r '.[].State.Running')"
           echo "Publish port: $(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')"
           echo "Testing the endpoint"
