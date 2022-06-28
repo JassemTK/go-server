@@ -7,12 +7,23 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Container creation 
       - uses: actions/checkout@v3
-
-      - name: Buildah Action
-        uses: redhat-actions/buildah-build@v2
-        with:
-          image : gtc
-          tags: latest ${{ github.sha }}
-          containerfiles: |
-            ./Dockerfile
+      - run: | 
+          buildah bud -f Dockerfile -t gtc:${{ github.sha }}[4]
+      
+      - name: locally running the container + possible smoke tests 
+      - uses: actions/checkout@v3
+      - run: | 
+          podman run -p 8081 --name gtc gtc:${{ github.sha }}[4]
+          echo "is the container running? $(podman inspect gtc | jq -r '.[].State.Running')"
+          echo "Publish port: $(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')"
+          echo "Testing the endpoint"
+          curl localhost:$(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')/Feature1
+          
+              
+      - name: image push to  docker.hub registry 
+      - uses: actions/checkout@v3
+      - run: | 
+          skopeo login
+          skopeo copy containers-storage:localhost/gtc:${{ github.sha }}[4] docker://microlotf/hellogo:${{ github.sha }}[4]
