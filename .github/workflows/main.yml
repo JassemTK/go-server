@@ -3,9 +3,8 @@ on:
   push
 
 jobs:
-  building_for_file:
+  building_from_file:
     runs-on: self-hosted
-
     steps:
       - name: Container creation 
       - run: | 
