@@ -21,6 +21,8 @@ jobs:
           echo "Publish port: $(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')"
           echo "Testing the endpoint"
           curl localhost:$(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')/Feature1
+          echo "sanity checks done, stopping container.."
+          podman stop gtc
   publishing_image:
     name: image push to  docker.hub registry 
     runs-on: self-hosted
