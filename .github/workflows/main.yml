@@ -21,12 +21,12 @@ jobs:
           echo "Publish port: $(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')"
           echo "Testing the endpoint"
           curl localhost:$(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')/Feature1
-          echo "sanity checks done, stopping container.."
-          podman stop gtc
+          echo "sanity checks done, deleting container.."
+          podman rm gtc
   publishing_image:
     name: image push to  docker.hub registry 
     runs-on: self-hosted
     steps:                 
       - run: | 
           skopeo login docker.io
-          skopeo copy containers-storage:localhost/gtc:${{ github.sha }}[4] docker://microlotf/hellogo:${{ github.sha }}
+          skopeo copy containers-storage:localhost/gtc:${{ github.sha }} docker://microlotf/hellogo:${{ github.sha }}
