@@ -8,6 +8,9 @@ jobs:
     runs-on: self-hosted
     steps: 
       - run: | 
+          # Git status check before building or alternatively pull under /tmp then do a clean up?
+          cd /tmp/ && mkdir run-${{ github.run.number }} && cd run-${{ github.run.number }}
+          git pull ${{ github.repository }} 
           buildah bud -f Dockerfile -t gtc:${{ github.sha }}
           
   
