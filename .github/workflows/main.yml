@@ -3,31 +3,32 @@ on:
   push
 
 jobs:
-  building_from_file:
-    name: Container creation
-    runs-on: self-hosted
-    steps: 
+    buildah-bud:
+      runs-on: self-hosted
+      name: creating container following the steps provided in the container file
+      steps: 
       - run: | 
           # Git status check before building or alternatively pull under /tmp then do a clean up?
           cd /tmp/ && mkdir run-${{ github.run.number }} && cd run-${{ github.run.number }}
           git pull ${{ github.repository }} 
-          buildah bud -f Dockerfile -t gtc:${{ github.sha }}
+          docker build -f Dockerfile -t gtc:${{ github.sha }}
+    
+    smoke_test:
+      name: podman to locally run the container 
+      runs-on: self-hosted
+      needs: [buildah-bud]
+      steps:
+        - run: | 
+           docker run -d -p 8081:8081 --name gtc localhost/gtc:${{ github.sha }}
+           curl localhost:$(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')/Feature1
+           docker rm * --force  
           
-  
-  smoke_tests:
-    name: locally running the container + possible smoke tests  
-    runs-on: self-hosted
-    needs: building_from_file
-    steps:
-      - run: | 
-          podman run -d -p 8081 --name gtc localhost/gtc:${{ github.sha }}
-          curl localhost:$(podman inspect gtc | jq -r '.[].NetworkSettings.Ports|.[]|.[]|.HostPort')/Feature1
-          podman rm gtc
-  publishing_image:
-    name: image push to  docker.hub registry 
-    runs-on: self-hosted
-    needs: smoke_tests
-    steps:                 
-      - run: | 
-          skopeo login docker.io
-          skopeo copy containers-storage:localhost/gtc:${{ github.sha }} docker://microlotf/hellogo:${{ github.sha }}
+          
+    publishing_image:
+      name: image push to  docker.hub registry 
+      runs-on: self-hosted
+      needs: smoke_test
+      steps:                 
+        - run: | 
+            docker login  
+            containers-storage:localhost/gtc:${{ github.sha }} docker://microlotf/hellogo:${{ github.sha }}
