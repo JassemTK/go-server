@@ -6,8 +6,7 @@ assuming that you have installed Vagrant and Virtualbox.
 Links:   
 https://www.vagrantup.com/downloads  
 https://www.virtualbox.org/  
-  
-This repo contains the session's resources, and will be updated accordingly.
+ 
 
 ## Vagrant, virtualbox as a provider
 
